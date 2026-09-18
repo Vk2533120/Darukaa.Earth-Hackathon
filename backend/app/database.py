@@ -8,7 +8,7 @@ from app.config import settings
 # echo=True prints SQL statements to the console during development.
 # ---------------------------------------------------------------------------
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    settings.get_async_db_url,
     echo=(settings.APP_ENV == "development"),
     future=True,
 )

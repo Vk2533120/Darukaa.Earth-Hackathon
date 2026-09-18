@@ -13,6 +13,18 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://username:password@localhost:5432/darukaa_earth"
 
+    @property
+    def get_async_db_url(self) -> str:
+        # Render and other hosts provide postgres:// or postgresql:// natively.
+        # We must enforce the asyncpg driver explicitly.
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif url.startswith("postgresql://") and not url.startswith("postgresql+asyncpg://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
+
+
     # CORS
     FRONTEND_URL: str = "http://localhost:5173"
 
