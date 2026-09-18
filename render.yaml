@@ -22,7 +22,7 @@ services:
   - type: web
     name: darukaa-frontend
     env: static
-    region: ohio
+    # (Removed 'region:' because static sites are deployed on Render's global CDN automatically)
     buildCommand: "cd frontend && npm install --legacy-peer-deps && npm run build"
     staticPublishPath: "./frontend/dist"
     envVars:
@@ -36,6 +36,4 @@ services:
 databases:
   - name: darukaa-db
     region: ohio
-    # Render's native PostgreSQL doesn't support PostGIS trivially via the UI in all specs,
-    # but when provisioned with PostGIS extensions available, Alembic will load it.
     plan: free
